@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-/* Layout mobile-first e comportamento de captura de leads.
-   Endpoint configurável via VITE_LEAD_ENDPOINT.
-*/
+/* Página Black Friday Probel — usa assets em public/assets */
 const LEAD_ENDPOINT = import.meta.env.VITE_LEAD_ENDPOINT || "/api/leads/probel-blackfriday";
 
 function MiniForm({ meta = {}, onSuccess }) {
@@ -19,7 +17,7 @@ function MiniForm({ meta = {}, onSuccess }) {
       await fetch(LEAD_ENDPOINT, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, whatsapp, email, ...meta })
+        body: JSON.stringify({ name, whatsapp, email, ...meta }),
       });
       setName(""); setWhatsapp(""); setEmail("");
       onSuccess && onSuccess();
@@ -95,7 +93,8 @@ export default function Home() {
             <div className="trust">Garantimos sigilo dos seus dados. Você receberá apenas ofertas da campanha.</div>
           </div>
 
-          <img src="/assets/hero-mattress.svg" alt="" className="hero-bg" aria-hidden="true" />
+          {/* Banner: usa banner1 (se for HTML, substitua manualmente) */}
+          <img src="/assets/banner1.jpg" alt="Banner Probel" className="hero-bg" loading="lazy" />
           <div className="flag">BLACK FRIDAY</div>
         </section>
 
@@ -122,16 +121,16 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="ofertas" className="vitrine">
+        <section className="vitrine" id="ofertas">
           <h3>Mais vendidos da Black Friday</h3>
           <div className="products grid-2">
-            {[1,2,3,4].map((i) => (
+            {[1,2,3,4,5,6].map((i) => (
               <article className="product-card" key={i}>
-                <img src={`/assets/prod${i}.svg`} alt={`Produto ${i}`} />
+                <img src={`/assets/prod${i}.jpg`} alt={`Produto ${i}`} loading="lazy" />
                 <div className="pd-info">
-                  <div className="pd-name">Colchão Exemplo {i}</div>
-                  <div className="pd-price">R$ {i * 999}</div>
-                  <div className="pd-old">R$ {i * 1999}</div>
+                  <div className="pd-name">Produto {i}</div>
+                  <div className="pd-price">R$ {(i*499).toLocaleString('pt-BR')}</div>
+                  <div className="pd-old">R$ {(i*999).toLocaleString('pt-BR')}</div>
                   <div className="pd-cond">Até 10x s/ juros</div>
                 </div>
                 <div className="pd-actions">
