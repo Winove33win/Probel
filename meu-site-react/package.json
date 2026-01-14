@@ -7,6 +7,8 @@
     "build": "vite build",
     "preview": "vite preview --port 5173",
     "start": "node app.js",
+    "prestart": "npm run build",
+    "postinstall": "npm run build",
     "fix": "npm install @vitejs/plugin-react --save-dev && npm audit fix && rm -rf node_modules/.vite dist && (npx kill-port 3000 || true) && npm run build",
     "start:alt": "PORT=3001 node app.js"
   },
