@@ -16,6 +16,7 @@ html,body,#root{height:100%;margin:0;background:var(--bf-black);color:#fff;font-
 .hero{display:grid;grid-template-columns:1fr;gap:18px;align-items:center;position:relative;padding:32px 0;background:radial-gradient(ellipse at top right,#0B0C10 0%,#060607 60%)}
 .hero-left h1{font-size:22px;margin:0}
 .lead{color:var(--text-secondary);margin-top:8px}
+.muted{color:var(--text-secondary)}
 .hero-bullets{margin:12px 0;color:var(--text-secondary)}
 .hero-actions{display:flex;gap:10px;margin-top:10px}
 .btn-primary{background:var(--bf-yellow);color:#000;padding:12px 16px;border-radius:999px;text-decoration:none;font-weight:700}
@@ -52,6 +53,16 @@ html,body,#root{height:100%;margin:0;background:var(--bf-black);color:#fff;font-
 .reason{background:#0f1013;padding:14px;border-radius:12px}
 .reviews{padding:18px 0}
 .review{background:#0f1013;padding:14px;border-radius:12px}
+.quadros{padding:24px 0}
+.quadros-header{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;flex-wrap:wrap}
+.quadros-header h3{margin:0}
+.quadros-header .muted{color:var(--text-secondary);margin-top:6px;max-width:520px}
+.quadros-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px;margin-top:16px}
+.quadro-card{background:#0f1013;border-radius:16px;overflow:hidden;border:1px solid #1c1d21;box-shadow:0 10px 28px rgba(0,0,0,0.25);transition:transform 0.3s ease, box-shadow 0.3s ease}
+.quadro-card:hover{transform:translateY(-4px);box-shadow:0 16px 32px rgba(0,0,0,0.35)}
+.quadro-media{position:relative;aspect-ratio:1/1;overflow:hidden;animation:quadrosFade 0.6s ease both}
+.quadro-media img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(1.05)}
+.quadros .btn-blue{align-self:flex-start}
 .final-cta{padding:18px 0}
 .final-inner{background:var(--bf-yellow);color:#000;padding:18px;border-radius:12px}
 .lgpd{font-size:12px;color:rgba(0,0,0,0.7);margin-top:8px}
@@ -62,10 +73,16 @@ html,body,#root{height:100%;margin:0;background:var(--bf-black);color:#fff;font-
 .float-inner{display:flex;gap:10px;align-items:center;background:var(--bf-yellow);color:#000;padding:10px 14px;border-radius:999px;text-decoration:none}
 .pill-black{background:#000;color:var(--bf-yellow);padding:6px 10px;border-radius:999px;font-weight:700;margin-left:6px}
 
+@keyframes quadrosFade{
+  from{opacity:0;transform:translateY(8px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
 /* Responsividade */
 @media(min-width:768px){
   .hero{grid-template-columns:1fr 360px;padding:48px 0}
   .hero-left h1{font-size:32px}
   .grid-3{grid-template-columns:repeat(3,1fr)}
   .products{grid-template-columns:repeat(2,1fr)}
+  .quadros-grid{grid-template-columns:repeat(3,1fr)}
 }
