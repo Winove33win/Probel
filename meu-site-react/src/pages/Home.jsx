@@ -2,6 +2,14 @@ import React, { useEffect, useState } from "react";
 
 /* Página Black Friday Probel — usa assets em public/assets */
 const LEAD_ENDPOINT = import.meta.env.VITE_LEAD_ENDPOINT || "/api/leads/probel-blackfriday";
+const QUADROS_IMAGES = [
+  { src: "/assets/prod1.jpg", alt: "Quadro Probel com colchão em destaque" },
+  { src: "/assets/prod2.jpg", alt: "Ambiente Probel com cama e enxoval" },
+  { src: "/assets/prod3.jpg", alt: "Detalhe de conforto em ambiente Probel" },
+  { src: "/assets/prod4.jpg", alt: "Composição Probel com base e colchão" },
+  { src: "/assets/prod5.jpg", alt: "Cena premium do showroom Probel" },
+  { src: "/assets/prod6.jpg", alt: "Close de acabamento de produto Probel" },
+];
 
 function MiniForm({ meta = {}, onSuccess }) {
   const [name, setName] = useState("");
@@ -186,6 +194,28 @@ export default function Home() {
             <div className="review"><strong>Mariana — SP</strong><div className="stars">★★★★★</div><p>"Melhor sono da vida."</p></div>
             <div className="review"><strong>Rafael — RJ</strong><div className="stars">★★★★★</div><p>"Entrega rápida e produto top."</p></div>
             <div className="review"><strong>Ana — MG</strong><div className="stars">★★★★★</div><p>"Comprei o conjunto box e estou amando."</p></div>
+          </div>
+        </section>
+
+        <section className="quadros" id="quadros">
+          <div className="quadros-header">
+            <div>
+              <h3>Quadros Probel TN</h3>
+              <p className="muted">
+                Um feed visual profissional com imagens selecionadas da marca — organizado como quadros, sempre em
+                formato quadrado para manter consistência e impacto.
+              </p>
+            </div>
+            <a href="#lead-bf" className="btn-pill btn-blue">Receber ofertas</a>
+          </div>
+          <div className="quadros-grid">
+            {QUADROS_IMAGES.map((item, index) => (
+              <article className="quadro-card" key={item.src}>
+                <div className="quadro-media" style={{ animationDelay: `${index * 80}ms` }}>
+                  <img src={item.src} alt={item.alt} loading="lazy" />
+                </div>
+              </article>
+            ))}
           </div>
         </section>
 
