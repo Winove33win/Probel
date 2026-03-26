@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { COLCHOES, BASES_BOX, CABECEIRAS, FIRMEZA_CONFIG, WHATSAPP_NUMBER } from '../data/products';
 import ProductModal from '../components/ProductModal';
+import HeroCarousel from '../components/HeroCarousel';
 
 const WA_GERAL = `https://wa.me/${WHATSAPP_NUMBER}?text=Ol%C3%A1!%20Gostaria%20de%20mais%20informa%C3%A7%C3%B5es%20sobre%20os%20colch%C3%B5es%20Probel.`;
 const FIRMEZAS = ['Todos', 'Extra Macio', 'Macio', 'Intermediário', 'Firme', 'Extra Firme'];
@@ -198,15 +199,13 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            <div className="hero-visual" aria-hidden="true">
-              <div className="bed-illus">
-                <div className="bed-headboard" />
-                <div className="bed-mattress">
-                  <div className="bed-pillow p1" />
-                  <div className="bed-pillow p2" />
-                </div>
-                <div className="bed-base" />
-              </div>
+            <div className="hero-visual">
+              <HeroCarousel
+                onVerProduto={(nome) => {
+                  const p = COLCHOES.find(c => c.nome === nome);
+                  if (p) setModalProduto(p);
+                }}
+              />
             </div>
           </div>
         </section>
