@@ -2,6 +2,9 @@
   "permissions": {
     "additionalDirectories": [
       "C:\\Users\\Nrtfe\\Probel-1\\meu-site-react\\src"
+    ],
+    "allow": [
+      "WebFetch(domain:www.probeljaguariuna.com.br)"
     ]
   }
 }

@@ -143,7 +143,7 @@ export default function Home() {
       {/* ───── HEADER ───── */}
       <header className="topbar">
         <div className="container topbar-inner">
-          <a href="#inicio" className="logo-area">
+          <a href="https://www.probeljaguariuna.com.br/" target="_blank" rel="noopener noreferrer" className="logo-area">
             <span className="logo-text">PROBEL</span>
             <span className="logo-sub">Jaguariúna</span>
           </a>
