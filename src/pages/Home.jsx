@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { COLCHOES, BASES_BOX, CABECEIRAS, FIRMEZA_CONFIG, WHATSAPP_NUMBER } from '../data/products';
+import ProductModal from '../components/ProductModal';
 
 const WA_GERAL = `https://wa.me/${WHATSAPP_NUMBER}?text=Ol%C3%A1!%20Gostaria%20de%20mais%20informa%C3%A7%C3%B5es%20sobre%20os%20colch%C3%B5es%20Probel.`;
-
 const FIRMEZAS = ['Todos', 'Extra Macio', 'Macio', 'Intermediário', 'Firme', 'Extra Firme'];
 
 const ICON_WA = () => (
@@ -14,27 +14,25 @@ const ICON_WA = () => (
 
 function FirmezaBadge({ firmeza }) {
   const cfg = FIRMEZA_CONFIG[firmeza] || { label: firmeza, color: '#6B7280', bg: '#F3F4F6' };
-  return (
-    <span className="firmeza-badge" style={{ color: cfg.color, background: cfg.bg }}>
-      {cfg.label}
-    </span>
-  );
+  return <span className="firmeza-badge" style={{ color: cfg.color, background: cfg.bg }}>{cfg.label}</span>;
 }
 
-function ColchaoCard({ produto }) {
+function ColchaoCard({ produto, onVerDetalhes }) {
   return (
     <article className="product-card">
-      <div className="card-header" style={{ background: `linear-gradient(135deg, ${produto.color}ee, ${produto.color}88)` }}>
-        <div className="card-icon" aria-hidden="true">
-          <svg width="52" height="52" viewBox="0 0 52 52" fill="none">
-            <rect x="4" y="18" width="44" height="22" rx="5" fill="white" fillOpacity="0.22"/>
-            <rect x="4" y="30" width="44" height="10" rx="4" fill="white" fillOpacity="0.32"/>
-            <rect x="8" y="13" width="36" height="7" rx="2.5" fill="white" fillOpacity="0.18"/>
-          </svg>
-        </div>
-        <div className="card-badges">
-          <FirmezaBadge firmeza={produto.firmeza} />
-          {produto.destaque && <span className="badge-destaque">Mais vendido</span>}
+      {/* Imagem real */}
+      <div className="card-img-wrap">
+        <img
+          src={produto.imagem}
+          alt={produto.nome}
+          className="card-img"
+          loading="lazy"
+        />
+        <div className="card-img-overlay">
+          <div className="card-badges">
+            <FirmezaBadge firmeza={produto.firmeza} />
+            {produto.destaque && <span className="badge-destaque">Mais vendido</span>}
+          </div>
         </div>
       </div>
       <div className="card-body">
@@ -44,25 +42,18 @@ function ColchaoCard({ produto }) {
           <span className="spec"><em>Densidade:</em> {produto.densidade}</span>
         </div>
         <p className="card-desc">{produto.desc}</p>
-        {produto.indicado && (
-          <p className="card-indicado">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-              <circle cx="12" cy="7" r="4"/>
-            </svg>
-            {produto.indicado}
-          </p>
-        )}
         {produto.certificado && (
           <p className="card-cert">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#22C55E" strokeWidth="2.5" aria-hidden="true">
-              <polyline points="20 6 9 17 4 12"/>
-            </svg>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#22C55E" strokeWidth="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
             Certificado {produto.certificado}
           </p>
         )}
       </div>
-      <div className="card-footer">
+      <div className="card-footer card-footer-2">
+        <button className="btn-detalhes" onClick={() => onVerDetalhes(produto)}>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          Ver ficha técnica
+        </button>
         <a href={produto.whatsapp} target="_blank" rel="noopener noreferrer" className="btn-whatsapp">
           <ICON_WA />
           Pedir via WhatsApp
@@ -128,17 +119,25 @@ function CabeceiraCard({ produto }) {
 export default function Home() {
   const [activeTab, setActiveTab] = useState('colchoes');
   const [firmezaFilter, setFirmezaFilter] = useState('Todos');
+  const [modalProduto, setModalProduto] = useState(null);
 
   const colchoesFiltrados = firmezaFilter === 'Todos'
     ? COLCHOES
     : COLCHOES.filter(c => {
-        const f = c.firmeza.trim().toLowerCase();
+        const f   = c.firmeza.trim().toLowerCase();
         const sel = firmezaFilter.trim().toLowerCase();
         return f === sel || f.includes(sel) || sel.includes(f);
       });
 
   return (
     <div className="page">
+
+      {/* ───── FAIXA FRETE GRÁTIS ───── */}
+      <div className="frete-bar">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true"><rect x="1" y="3" width="15" height="13" rx="2"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        <strong>Frete Grátis para Jaguariúna e Região!</strong>
+        <span>Fale no WhatsApp e confirme sua cidade</span>
+      </div>
 
       {/* ───── HEADER ───── */}
       <header className="topbar">
@@ -194,8 +193,8 @@ export default function Home() {
                 </div>
                 <div className="trust-div" aria-hidden="true" />
                 <div className="trust-item">
-                  <strong>13</strong>
-                  <span>modelos disponíveis</span>
+                  <strong>Frete Grátis</strong>
+                  <span>Jaguariúna e região</span>
                 </div>
               </div>
             </div>
@@ -217,33 +216,14 @@ export default function Home() {
           <div className="container">
             <div className="diferenciais-grid">
               {[
-                {
-                  icon: <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>,
-                  title: 'Certificação INMETRO',
-                  desc: 'Qualidade e segurança comprovadas',
-                },
-                {
-                  icon: <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>,
-                  title: 'Tecnologia One-Side',
-                  desc: 'Não precisa virar o colchão',
-                },
-                {
-                  icon: <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><rect x="1" y="3" width="15" height="13" rx="2"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>,
-                  title: 'Entrega em todo Brasil',
-                  desc: 'Consulte frete e prazo',
-                },
-                {
-                  icon: <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>,
-                  title: 'Molas Antirruído',
-                  desc: 'Independência total de movimentos',
-                },
+                { icon: <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>, title: 'Certificação INMETRO', desc: 'Qualidade e segurança comprovadas' },
+                { icon: <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>, title: 'Tecnologia One-Side', desc: 'Não precisa virar o colchão' },
+                { icon: <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><rect x="1" y="3" width="15" height="13" rx="2"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>, title: 'Frete Grátis na Região', desc: 'Jaguariúna e cidades próximas' },
+                { icon: <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>, title: 'Molas Antirruído', desc: 'Independência total de movimentos' },
               ].map(d => (
                 <div key={d.title} className="diferencial">
                   <div className="diferencial-icon" aria-hidden="true">{d.icon}</div>
-                  <div>
-                    <strong>{d.title}</strong>
-                    <p>{d.desc}</p>
-                  </div>
+                  <div><strong>{d.title}</strong><p>{d.desc}</p></div>
                 </div>
               ))}
             </div>
@@ -258,16 +238,14 @@ export default function Home() {
               <p className="section-sub">Selecione a categoria e encontre o modelo ideal para você</p>
             </div>
 
-            {/* Tabs */}
             <div className="tabs" role="tablist">
               {[
-                { key: 'colchoes', label: 'Colchões', count: COLCHOES.length },
-                { key: 'bases',    label: 'Bases Box', count: BASES_BOX.length },
+                { key: 'colchoes',   label: 'Colchões',   count: COLCHOES.length },
+                { key: 'bases',      label: 'Bases Box',  count: BASES_BOX.length },
                 { key: 'cabeceiras', label: 'Cabeceiras', count: CABECEIRAS.length },
               ].map(t => (
                 <button
-                  key={t.key}
-                  role="tab"
+                  key={t.key} role="tab"
                   aria-selected={activeTab === t.key}
                   className={`tab${activeTab === t.key ? ' tab-active' : ''}`}
                   onClick={() => setActiveTab(t.key)}
@@ -277,7 +255,6 @@ export default function Home() {
               ))}
             </div>
 
-            {/* Firmeza filter */}
             {activeTab === 'colchoes' && (
               <div className="filtros" role="group" aria-label="Filtrar por firmeza">
                 <span className="filtros-label">Firmeza:</span>
@@ -296,7 +273,9 @@ export default function Home() {
 
             {activeTab === 'colchoes' && (
               <div className="product-grid">
-                {colchoesFiltrados.map(p => <ColchaoCard key={p.id} produto={p} />)}
+                {colchoesFiltrados.map(p => (
+                  <ColchaoCard key={p.id} produto={p} onVerDetalhes={setModalProduto} />
+                ))}
               </div>
             )}
             {activeTab === 'bases' && (
@@ -352,18 +331,9 @@ export default function Home() {
           <div className="container sobre-inner">
             <div className="sobre-visual" aria-hidden="true">
               <div className="sobre-badges">
-                <div className="sobre-badge">
-                  <strong>80+</strong>
-                  <span>Anos de experiência</span>
-                </div>
-                <div className="sobre-badge sb2">
-                  <strong>INMETRO</strong>
-                  <span>Certificação oficial</span>
-                </div>
-                <div className="sobre-badge sb3">
-                  <strong>One-Side</strong>
-                  <span>Tecnologia exclusiva</span>
-                </div>
+                <div className="sobre-badge"><strong>80+</strong><span>Anos de experiência</span></div>
+                <div className="sobre-badge sb2"><strong>INMETRO</strong><span>Certificação oficial</span></div>
+                <div className="sobre-badge sb3"><strong>One-Side</strong><span>Tecnologia exclusiva</span></div>
               </div>
             </div>
             <div className="sobre-content">
@@ -371,12 +341,7 @@ export default function Home() {
               <p>Com mais de 80 anos de história, a Probel é uma das marcas mais reconhecidas no mercado de colchões do Brasil. Cada produto é desenvolvido com tecnologia avançada e materiais de qualidade certificada pelo INMETRO.</p>
               <p>Nossa linha de molas ensacadas garante independência de movimentos — cada mola age individualmente, reduzindo a transferência de movimento e proporcionando noites mais tranquilas para casais com biotipos diferentes.</p>
               <ul className="sobre-lista">
-                {[
-                  'Tecnologia One-Side — não precisa virar',
-                  'Sistema de molas antirruído',
-                  'Espumas certificadas e de alta durabilidade',
-                  'Madeira de reflorestamento tratada (bases)',
-                ].map(item => (
+                {['Tecnologia One-Side — não precisa virar', 'Sistema de molas antirruído', 'Espumas certificadas e de alta durabilidade', 'Madeira de reflorestamento tratada (bases)'].map(item => (
                   <li key={item}>
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22C55E" strokeWidth="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
                     {item}
@@ -459,10 +424,15 @@ export default function Home() {
       </footer>
 
       {/* ───── FLOATING WA ───── */}
-      <a href={WA_GERAL} target="_blank" rel="noopener noreferrer" className="wa-float" aria-label="Falar conosco pelo WhatsApp">
+      <a href={WA_GERAL} target="_blank" rel="noopener noreferrer" className="wa-float" aria-label="WhatsApp">
         <ICON_WA />
         <span>Falar no WhatsApp</span>
       </a>
+
+      {/* ───── MODAL DETALHES ───── */}
+      {modalProduto && (
+        <ProductModal produto={modalProduto} onClose={() => setModalProduto(null)} />
+      )}
 
     </div>
   );
