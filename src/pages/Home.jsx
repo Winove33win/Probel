@@ -144,7 +144,11 @@ export default function Home() {
       <header className="topbar">
         <div className="container topbar-inner">
           <a href="https://www.probeljaguariuna.com.br/" target="_blank" rel="noopener noreferrer" className="logo-area">
-            <span className="logo-text">PROBEL</span>
+            <img
+              src="/assets/Logotipo-Probel_01-PRINCIPA-min-1024x382.webp"
+              alt="Probel"
+              className="logo-img"
+            />
             <span className="logo-sub">Jaguariúna</span>
           </a>
           <nav className="nav" aria-label="Menu principal">
@@ -325,6 +329,38 @@ export default function Home() {
           </div>
         </section>
 
+        {/* ───── PROMOÇÃO DO MÊS ───── */}
+        <section className="promo-section">
+          <div className="container">
+            <div className="promo-card">
+              <div className="promo-badge-mes">🛍️ Mês do Consumidor</div>
+              <h2 className="promo-title">Oferta Especial do Mês</h2>
+              <div className="promo-produto-nome">
+                🛌 Conjunto Star Casal 1,38m
+                <span className="promo-subtag">Molas Ensacadas</span>
+              </div>
+              <div className="promo-precos">
+                <span className="promo-de">De <s>R$ 7.106,00</s></span>
+                <div className="promo-por">
+                  <span className="promo-valor">R$ 3.999</span>
+                  <span className="promo-cond">à vista</span>
+                </div>
+                <span className="promo-parcelado">ou <strong>10x de R$ 399,90</strong> no cartão</span>
+              </div>
+              <p className="promo-desc">É um modelo que entrega muito conforto e custo-benefício. Aproveite essa condição diferenciada por tempo limitado!</p>
+              <a
+                href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Olá! Vi a promoção do Mês do Consumidor — Conjunto Star Casal 1,38m por R$ 3.999. Gostaria de mais informações!')}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="promo-cta"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.553 4.117 1.523 5.847L0 24l6.335-1.499A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.817 9.817 0 01-5.006-1.368l-.36-.213-3.726.881.915-3.618-.234-.372A9.772 9.772 0 012.182 12c0-5.415 4.403-9.818 9.818-9.818S21.818 6.585 21.818 12 17.415 21.818 12 21.818z"/></svg>
+                Quero aproveitar essa oferta
+              </a>
+            </div>
+          </div>
+        </section>
+
         {/* ───── SOBRE ───── */}
         <section className="sobre-section" id="sobre">
           <div className="container sobre-inner">
@@ -416,8 +452,12 @@ export default function Home() {
           </div>
         </div>
         <div className="footer-bottom">
-          <div className="container">
+          <div className="container footer-bottom-inner">
             <span>© {new Date().getFullYear()} Probel Jaguariúna. Todos os direitos reservados.</span>
+            <span className="footer-dev">
+              Desenvolvido por{' '}
+              <a href="https://www.winove.com.br" target="_blank" rel="noopener noreferrer">Winove</a>
+            </span>
           </div>
         </div>
       </footer>
@@ -425,14 +465,4 @@ export default function Home() {
       {/* ───── FLOATING WA ───── */}
       <a href={WA_GERAL} target="_blank" rel="noopener noreferrer" className="wa-float" aria-label="WhatsApp">
         <ICON_WA />
-        <span>Falar no WhatsApp</span>
-      </a>
-
-      {/* ───── MODAL DETALHES ───── */}
-      {modalProduto && (
-        <ProductModal produto={modalProduto} onClose={() => setModalProduto(null)} />
-      )}
-
-    </div>
-  );
-}
+        <span>Falar no WhatsAp

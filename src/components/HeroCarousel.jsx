@@ -175,7 +175,7 @@ export default function HeroCarousel({ onVerProduto }) {
           className="hc-avatar"
           aria-label="Probel Jaguariúna"
         >
-          <span>P</span>
+          <img src="/assets/Logotipo-Probel_01-PRINCIPA-min-1024x382.webp" alt="Probel" />
         </a>
         <div className="hc-account">
           <span className="hc-username">probeljaguariuna</span>
