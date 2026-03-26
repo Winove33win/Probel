@@ -448,7 +448,11 @@ p  { color: var(--muted); line-height: 1.7; }
 }
 .footer-wa:hover { background: var(--green-d); }
 .footer-bottom { border-top: 1px solid rgba(255,255,255,.08); padding: 16px 0; }
+.footer-bottom-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
 .footer-bottom span { font-size: .78rem; color: rgba(255,255,255,.4); }
+.footer-dev { font-size: .78rem; color: rgba(255,255,255,.35); }
+.footer-dev a { color: rgba(255,255,255,.55); text-decoration: none; transition: color .2s; }
+.footer-dev a:hover { color: #fff; }
 
 /* ============================================================  FLOATING WA  */
 .wa-float {

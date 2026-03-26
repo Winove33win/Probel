@@ -465,4 +465,14 @@ export default function Home() {
       {/* ───── FLOATING WA ───── */}
       <a href={WA_GERAL} target="_blank" rel="noopener noreferrer" className="wa-float" aria-label="WhatsApp">
         <ICON_WA />
-        <span>Falar no WhatsAp
+        <span>Falar no WhatsApp</span>
+      </a>
+
+      {/* ───── MODAL DETALHES ───── */}
+      {modalProduto && (
+        <ProductModal produto={modalProduto} onClose={() => setModalProduto(null)} />
+      )}
+
+    </div>
+  );
+}
